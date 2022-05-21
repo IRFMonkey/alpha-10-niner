@@ -1,0 +1,53 @@
+local esp_settings = { -- the very skidded esp that i changed very very little because i don't know how billboardguis work
+   textsize = 18,
+   colour = 200,99,99
+}
+local gui = Instance.new("BillboardGui")
+local esp = Instance.new("TextLabel",gui)
+gui.Name = "esp"
+gui.ResetOnSpawn = false
+gui.AlwaysOnTop = true
+gui.LightInfluence = 0
+gui.Size = UDim2.new(0.1, 0, 3.5, 0);
+esp.BackgroundColor3 = Color3.fromRGB(255, 255, 255);
+esp.Text = ""
+esp.Size = UDim2.new(0.001, 0.0001, 0.001, 0.0001);
+esp.BorderSizePixel = 4;
+esp.BorderColor3 = Color3.new(esp_settings.colour)
+esp.BorderSizePixel = 0
+esp.Font = "GothamSemibold"
+esp.TextSize = esp_settings.textsize
+esp.TextColor3 = Color3.fromRGB(esp_settings.colour) -- text colour!!!
+game:GetService("RunService").Stepped:Connect(function() -- every physics thing or something like that
+for i, v in pairs(game:GetService'Players':GetChildren()) do -- loop through players!
+if v and v.Character then
+if v ~= game.Players.LocalPlayer then -- makes sure localplayer don't get detected!!!!!
+local character = v.Character
+pcall(function() -- R6
+   character.HumanoidRootPart.CanCollide = false
+       character.Head.CanCollide = false
+       character.Torso.CanCollide = false
+   end)
+   pcall(function() -- R15
+       character.HumanoidRootPart.CanCollide = false
+       character.Head.CanCollide = false
+       character.LowerTorso.CanCollide = false
+       character.UpperTorso.CanCollide = false
+       end)
+if (character.HumanoidRootPart.RotVelocity.Magnitude >= 7000) then --THE SPEED TO DETECT!! might detect victims of the flinger.
+   character.HumanoidRootPart.Transparency = 0
+   character.HumanoidRootPart.Color = Color3.new(1, 0, 0)
+   if character.HumanoidRootPart:FindFirstChild("esp")==nil then
+       game.StarterGui:SetCore("ChatMakeSystemMessage", {
+              Text = v.Name .. " Is flinging people. Magnitude: "..character.HumanoidRootPart.RotVelocity.Magnitude;
+              Color = Color3.fromRGB(255, 200, 200);
+           })
+       esp.Text = v.Name
+       gui:Clone().Parent = character.HumanoidRootPart
+   end
+end
+end
+end
+end
+end)
+-- yes there are lots of errors when people die but at least it works :3
