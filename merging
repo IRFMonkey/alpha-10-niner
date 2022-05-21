@@ -1,0 +1,3 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/IRFMonkey/alpha-10-niner/main/mouse%20fling", true))()
+-- sep
+loadstring(game:HttpGet("https://raw.githubusercontent.com/IRFMonkey/alpha-10-niner/main/anti fling", true))()
